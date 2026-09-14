@@ -19,16 +19,12 @@
       min-height: 100vh;
     }
 
-    /* Vibrant, Solid Animated Overlay */
     .overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: linear-gradient(-45deg, #4a001f, #800020, #4b0082, #d2691e, #800020);
-      background-size: 400% 400%;
-      animation: gradientBG 12s ease infinite;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -39,11 +35,18 @@
       padding: 20px;
       transition: opacity 0.8s ease, visibility 0.8s ease;
       opacity: 1;
+      overflow: hidden;
     }
-    @keyframes gradientBG {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+
+    .overlay-bg-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: 100% 100%; /* Forces image to stretch fully into view */
+      z-index: -1;
+      filter: brightness(0.4); /* Darkens image so text stays clear */
     }
     
     .overlay.hidden {
@@ -369,6 +372,7 @@
 
   <!-- Entry Overlay -->
   <div class="overlay" id="overlay">
+    <img src="your-overlay-bg.jpg" alt="Background" class="overlay-bg-img">
     <h2>✨ You are Invited ✨</h2>
     <p>Aishwarya & Shivam's Wedding</p>
     <button class="open-btn" id="openBtn">✉️ Open Invitation</button>
