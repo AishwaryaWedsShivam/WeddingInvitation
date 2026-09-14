@@ -101,18 +101,17 @@
 
     /* Fluid Typography to Prevent Text Clipping */
     h1 {
-      font-size: clamp(1.6em, 6.5vw, 3em);
-      margin-top: 10px;
-      margin-bottom: 10px;
-      line-height: 1.2;
-      word-wrap: break-word;
-      overflow-wrap: break-word;
-      background: linear-gradient(90deg, #b22222, #ffd700, #b22222);
-      background-size: 200% auto;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: shimmer 3s linear infinite;
-    }
+  font-size: clamp(1.1em, 5vw, 2.2em); /* Reduced font bounds */
+  white-space: nowrap; /* Keeps heading strictly on 1 line */
+  margin-top: 10px;
+  margin-bottom: 10px;
+  line-height: 1.2;
+  background: linear-gradient(90deg, #b22222, #ffd700, #b22222);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 3s linear infinite;
+}
     @keyframes shimmer {
       to { background-position: 200% center; }
     }
@@ -131,13 +130,12 @@
     }
 
     .details {
-      font-size: clamp(0.95em, 3.8vw, 1.3em);
-      margin-top: 20px;
-      line-height: 1.7;
-      word-wrap: break-word;
-      overflow-wrap: break-word;
-      animation: breatheGlow 4s infinite alternate;
-    }
+  font-size: clamp(0.7em, 2.5vw, 1.1em); /* Reduced font bounds to guarantee fit */
+  margin-top: 20px;
+  line-height: 1.7;
+  white-space: nowrap;
+  animation: breatheGlow 4s infinite alternate;
+}
     @keyframes breatheGlow {
       from { text-shadow: 0 0 3px gold; }
       to { text-shadow: 0 0 12px orange; }
@@ -375,16 +373,16 @@
     </div>
 
     <p class="details">
-      ✨ With hearts full of joy, we invite you to join us ✨<br>
-      💍 On <strong>21st November 2026</strong><br>
-      🏰 At <strong>LA MANSION, New Delhi</strong><br>
-      🌺 To celebrate the sacred union of Aishwarya & Shivam 🌺
-    </p>
+  ✨ With hearts full of joy, we invite you to join us ✨<br>
+  💍 On <strong>21st November 2026</strong><br>
+  🏰 At <strong>LA MANSION, New Delhi</strong><br>
+  🌺 To celebrate the sacred union of Aishwarya & Shivam 🌺
+</p>
 
     <div class="countdown" id="countdown"></div>
 
     <p>
-      <a href="https://maps.app.goo.gl/yUTq8F6aWH6uzJpN8" target="_blank" class="map-link">📍 View Venue on Google Maps</a>
+      <a href="https://maps.app.goo.gl/m43dvr7o9L63gA4F8" target="_blank" class="map-link">📍 View Venue on Google Maps</a>
     </p>
   </div>
 
