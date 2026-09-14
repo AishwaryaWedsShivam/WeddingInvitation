@@ -379,7 +379,28 @@
   🌺 To celebrate the sacred union of Aishwarya & Shivam 🌺
 </p>
 
-    <div class="countdown" id="countdown"></div>
+   <!-- Dynamic Countdown Display -->
+<div style="display: flex; justify-content: center; align-items: center; gap: 8px; margin: 18px 0; font-family: serif;">
+  <div style="display: flex; align-items: center; gap: 4px;">
+    <span id="days" style="background-color: #8b2626; color: #ffffff; padding: 4px 10px; border-radius: 16px; font-weight: bold; font-size: 15px; min-width: 20px; text-align: center;">00</span>
+    <span style="color: #6b1f1f; font-size: 13px; font-weight: 600;">Days</span>
+  </div>
+  <span style="color: #a87b32;">•</span>
+  <div style="display: flex; align-items: center; gap: 4px;">
+    <span id="hours" style="background-color: #8b2626; color: #ffffff; padding: 4px 10px; border-radius: 16px; font-weight: bold; font-size: 15px; min-width: 20px; text-align: center;">00</span>
+    <span style="color: #6b1f1f; font-size: 13px; font-weight: 600;">Hours</span>
+  </div>
+  <span style="color: #a87b32;">•</span>
+  <div style="display: flex; align-items: center; gap: 4px;">
+    <span id="minutes" style="background-color: #8b2626; color: #ffffff; padding: 4px 10px; border-radius: 16px; font-weight: bold; font-size: 15px; min-width: 20px; text-align: center;">00</span>
+    <span style="color: #6b1f1f; font-size: 13px; font-weight: 600;">Mins</span>
+  </div>
+  <span style="color: #a87b32;">•</span>
+  <div style="display: flex; align-items: center; gap: 4px;">
+    <span id="seconds" style="background-color: #8b2626; color: #ffffff; padding: 4px 10px; border-radius: 16px; font-weight: bold; font-size: 15px; min-width: 20px; text-align: center;">00</span>
+    <span style="color: #6b1f1f; font-size: 13px; font-weight: 600;">Secs</span>
+  </div>
+</div>
 
     <p>
       <a href="https://maps.app.goo.gl/m43dvr7o9L63gA4F8" target="_blank" class="map-link">📍 View Venue on Google Maps</a>
@@ -458,27 +479,35 @@
       }
     });
 
-    // Countdown Timer
-    const weddingDate = new Date("Nov 21, 2026 10:00:00").getTime();
-    const countdownElement = document.getElementById("countdown");
+    // Set your target wedding date and time
+  const weddingDate = new Date("November 21, 2026 00:00:00").getTime();
 
-    const timer = setInterval(() => {
-      const now = new Date().getTime();
-      const distance = weddingDate - now;
+  function updateCountdown() {
+    const now = new Date().getTime();
+    const distance = weddingDate - now;
 
-      if (distance < 0) {
-        clearInterval(timer);
-        countdownElement.innerHTML = "🎉 The Celebration Has Begun!";
-        return;
-      }
+    if (distance < 0) {
+      document.getElementById("days").innerText = "00";
+      document.getElementById("hours").innerText = "00";
+      document.getElementById("minutes").innerText = "00";
+      document.getElementById("seconds").innerText = "00";
+      return;
+    }
 
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      countdownElement.innerHTML = `⏳ ${days}d ${hours}h ${minutes}m ${seconds}s left`;
-    }, 1000);
+    document.getElementById("days").innerText = String(days).padStart(2, '0');
+    document.getElementById("hours").innerText = String(hours).padStart(2, '0');
+    document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
+    document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
+  }
+
+  // Run update immediately and then every 1 second
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
 
     // Floating Petals
     function createPetal() {
@@ -502,5 +531,6 @@
     }
     setInterval(createBell, 6000);
   </script>
+
 </body>
 </html>
