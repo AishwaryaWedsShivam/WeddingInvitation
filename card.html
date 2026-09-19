@@ -4,21 +4,43 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Wedding Invitation</title>
+  
+  <!-- Pre-loading Elegant Web Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+
   <style>
     * {
       box-sizing: border-box;
     }
     body {
       font-family: 'Georgia', serif;
-      background: url('floral-background.png') no-repeat center center fixed;
-      background-size: cover;
       margin: 0;
       padding: 0;
       color: #4a2c2a;
       overflow-x: hidden;
       min-height: 100vh;
+      background-color: #2b1110;
     }
 
+    /* Dynamic Background Image Layers */
+    .bg-layer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      z-index: 0;
+      transition: opacity 1.5s ease-in-out;
+    }
+    #bgLayer1 { opacity: 1; }
+    #bgLayer2 { opacity: 0; }
+
+    /* Entry Overlay */
     .overlay {
       position: fixed;
       top: 0;
@@ -44,9 +66,9 @@
       left: 0;
       width: 100%;
       height: 100%;
-      object-fit: 100% 100%; /* Forces image to stretch fully into view */
+      object-fit: cover;
       z-index: -1;
-      filter: brightness(0.4); /* Darkens image so text stays clear */
+      filter: brightness(0.35);
     }
     
     .overlay.hidden {
@@ -54,38 +76,197 @@
       visibility: hidden;
     }
 
-    .overlay h2 {
-      font-size: clamp(1.8em, 6vw, 3.2em);
+    /* Floating Overlay Petals & Flowers */
+    .overlay-petal {
+      position: absolute;
+      top: -40px;
+      font-size: clamp(18px, 4vw, 28px);
+      pointer-events: none;
+      z-index: 1;
+      animation: overlayPetalFall linear infinite;
+    }
+
+    @keyframes overlayPetalFall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 0.8; }
+      100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* Glassmorphism Card Frame with Floral Decor for Overlay */
+    .overlay-card {
+      position: relative;
+      background: rgba(43, 17, 16, 0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 2px solid rgba(212, 175, 55, 0.6);
+      padding: clamp(35px, 6vw, 55px) clamp(20px, 5vw, 45px);
+      border-radius: 28px;
+      box-shadow: 0 0 45px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(212, 175, 55, 0.2);
+      max-width: 580px;
+      width: 90%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 2;
+      overflow: hidden;
+    }
+
+    /* Decorative Corner Floral Patterns */
+    .overlay-card::before, .overlay-card::after {
+      content: '🌸';
+      position: absolute;
+      font-size: clamp(20px, 5vw, 32px);
+      opacity: 0.85;
+      filter: drop-shadow(0 0 8px gold);
+    }
+    .overlay-card::before { top: 12px; left: 16px; }
+    .overlay-card::after { top: 12px; right: 16px; }
+
+    /* Top Marigold Garland Toran */
+    .overlay-garland {
+      font-size: clamp(1.2em, 4.5vw, 2em);
       margin-bottom: 10px;
-      word-break: break-word;
-      background: linear-gradient(90deg, #ffe066, #ffffff, #ffd700);
+      letter-spacing: 6px;
+      filter: drop-shadow(0 2px 6px rgba(255, 140, 0, 0.7));
+      user-select: none;
+    }
+
+    /* Lord Ganesha Icon in Overlay */
+    .overlay-ganesha {
+      width: clamp(75px, 22vw, 120px);
+      height: auto;
+      margin: 5px 0 12px 0;
+      filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.85));
+      animation: ganeshaGlow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes ganeshaGlow {
+      from { transform: scale(1); filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.7)); }
+      to { transform: scale(1.04); filter: drop-shadow(0 0 20px rgba(255, 215, 0, 1)); }
+    }
+
+    .ornament {
+      color: #D4AF37;
+      font-size: clamp(0.9em, 3vw, 1.2em);
+      letter-spacing: 6px;
+      opacity: 0.9;
+      margin: 4px 0;
+    }
+
+    /* Royal Gold Header Typography */
+    .overlay h2 {
+      font-family: 'Cinzel', 'Georgia', serif;
+      font-size: clamp(1.6em, 5.5vw, 3.1em);
+      font-weight: 700;
+      letter-spacing: 2px;
+      margin: 12px 0 6px 0;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #FFE066 0%, #FFFFFF 25%, #F5AF19 50%, #E65C00 75%, #FFD700 100%);
+      background-size: 200% auto;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+      animation: goldShimmer 4s linear infinite;
+      filter: drop-shadow(0 4px 15px rgba(255, 215, 0, 0.35));
+      line-height: 1.25;
     }
-    .overlay p {
-      font-size: clamp(1.1em, 4vw, 1.6em);
-      margin-top: 5px;
-      color: #fff8e7;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+
+    @keyframes goldShimmer {
+      to { background-position: 200% center; }
     }
+
+    /* Elegant Calligraphy Subtitle */
+    .overlay p.test {
+      font-family: 'Great Vibes', 'Georgia', cursive;
+      font-size: clamp(1.8em, 5.5vw, 2.8em);
+      color: #FFF8E7;
+      margin: 4px 0 18px 0;
+      letter-spacing: 1px;
+      text-shadow: 0 0 12px rgba(255, 215, 0, 0.6), 0 2px 4px rgba(0, 0, 0, 0.9);
+      background: none;
+      -webkit-text-fill-color: initial;
+    }
+
+    /* Luxury Button Styling */
     .open-btn {
-      margin-top: 35px;
-      padding: 14px 32px;
-      font-size: clamp(1em, 4vw, 1.3em);
-      font-family: 'Georgia', serif;
-      font-weight: bold;
-      background: linear-gradient(90deg, #ff4e50, #f9d423);
-      color: #4a001f;
-      border: 2px solid #ffffff;
-      border-radius: 40px;
+      margin-top: 10px;
+      padding: 16px 38px;
+      font-size: clamp(0.95em, 3.5vw, 1.15em);
+      font-family: 'Cinzel', 'Georgia', serif;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #FFFFFF;
+      background: linear-gradient(135deg, #d4af37, #8b2626);
+      border: 1px solid rgba(255, 224, 102, 0.8);
+      border-radius: 50px;
       cursor: pointer;
-      box-shadow: 0 0 25px rgba(255, 215, 0, 0.7);
-      animation: pulse 2s infinite;
+      box-shadow: 0 0 25px rgba(212, 175, 55, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+      animation: pulse 2.2s infinite;
       -webkit-tap-highlight-color: transparent;
     }
 
-    /* Card Container with Auto-Adjusting Layout */
+    .open-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 35px rgba(255, 215, 0, 0.85);
+    }
+
+    /* Scratch/Scribble Overlay Styles */
+    .scratch-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 9998;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      opacity: 1;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+
+    .scratch-container.active {
+      display: flex;
+    }
+
+    .scratch-container.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    #scratchCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      touch-action: none;
+      cursor: pointer;
+    }
+
+    .scratch-hint {
+      position: absolute;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #7a121d;
+      font-size: clamp(1em, 3.5vw, 1.3em);
+      font-weight: bold;
+      background: rgba(255, 248, 231, 0.95);
+      padding: 10px 22px;
+      border-radius: 30px;
+      border: 2px solid #d4af37;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+      pointer-events: none;
+      animation: pulse 1.5s infinite;
+      text-align: center;
+      z-index: 10;
+    }
+
+    /* Card Container */
     .card {
       background: rgba(255, 248, 231, 0.95);
       margin: 20px auto 80px auto;
@@ -101,8 +282,7 @@
       z-index: 2;
       height: auto;
     }
-
-    /* Fluid Typography to Prevent Text Clipping */
+	
     h1 {
       font-size: clamp(1.1em, 5vw, 2.2em);
       margin-top: 10px;
@@ -119,7 +299,7 @@
       to { background-position: 200% center; }
     }
     
-    h2 {
+    .card h2 {
       font-size: clamp(1.2em, 5vw, 2em);
       color: #d2691e;
       margin-top: 0;
@@ -147,7 +327,7 @@
       to { text-shadow: 0 0 12px orange; }
     }
 
-    /* Responsive Flex Layout for Mobile Countdown */
+    /* Countdown Styling */
     .countdown-container {
       display: flex;
       justify-content: center;
@@ -195,29 +375,49 @@
       mix-blend-mode: multiply;
     }
     
-    /* Merged Couple Section */
     .couple {
-      margin: 15px 0;
+      margin: 15px auto;
       animation: gentleBounce 3s ease-in-out infinite;
       position: relative;
-      display: inline-block;
-      max-width: 100%;
-    }
-    .couple img {
+      display: block;
       width: 100%;
       max-width: 280px;
-      height: auto;
+      height: 350px;
+    }
+
+    .couple-slideshow {
+      position: relative;
+      width: 100%;
+      height: 100%;
       border-radius: 15px;
+      overflow: hidden;
+    }
+
+    .couple-slideshow img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
       mix-blend-mode: multiply;
       mask-image: radial-gradient(circle, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%);
       -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%);
+      opacity: 0;
+      transition: opacity 1.2s ease-in-out;
     }
+
+    .couple-slideshow img.active {
+      opacity: 1;
+    }
+
     .heart {
       position: absolute;
       color: #ff4d6d;
       font-size: clamp(16px, 4.5vw, 28px);
       opacity: 0.8;
       animation: floatHearts 6s linear infinite;
+      z-index: 2;
     }
     @keyframes gentleBounce {
       0%, 100% { transform: translateY(0); }
@@ -228,7 +428,6 @@
       100% { transform: translateY(-130px) scale(1.3); opacity: 0; }
     }
 
-    /* Page-level fixed overlay container for top left & right showering */
     .main-page-shower-container {
       position: fixed;
       top: 0;
@@ -246,48 +445,23 @@
       pointer-events: none;
     }
 
-    .shower-top-left {
-      animation: showerFromTopLeft linear forwards;
-    }
-    .shower-top-right {
-      animation: showerFromTopRight linear forwards;
-    }
+    .shower-top-left { animation: showerFromTopLeft linear forwards; }
+    .shower-top-right { animation: showerFromTopRight linear forwards; }
 
     @keyframes showerFromTopLeft {
-      0% {
-        transform: translate(0, -30px) rotate(0deg) scale(0.6);
-        opacity: 0;
-      }
-      15% {
-        opacity: 1;
-      }
-      80% {
-        opacity: 0.9;
-      }
-      100% {
-        transform: translate(35vw, 105vh) rotate(360deg) scale(1.2);
-        opacity: 0;
-      }
+      0% { transform: translate(0, -30px) rotate(0deg) scale(0.6); opacity: 0; }
+      15% { opacity: 1; }
+      80% { opacity: 0.9; }
+      100% { transform: translate(35vw, 105vh) rotate(360deg) scale(1.2); opacity: 0; }
     }
 
     @keyframes showerFromTopRight {
-      0% {
-        transform: translate(0, -30px) rotate(0deg) scale(0.6);
-        opacity: 0;
-      }
-      15% {
-        opacity: 1;
-      }
-      80% {
-        opacity: 0.9;
-      }
-      100% {
-        transform: translate(-35vw, 105vh) rotate(-360deg) scale(1.2);
-        opacity: 0;
-      }
+      0% { transform: translate(0, -30px) rotate(0deg) scale(0.6); opacity: 0; }
+      15% { opacity: 1; }
+      80% { opacity: 0.9; }
+      100% { transform: translate(-35vw, 105vh) rotate(-360deg) scale(1.2); opacity: 0; }
     }
 
-    /* Background Animation Effects */
     .petal {
       position: fixed;
       top: -50px;
@@ -321,7 +495,6 @@
       100% { transform: translateY(105vh) rotate(-10deg); }
     }
 
-    /* Fixed Diya Icons & Music Controls */
     .diya {
       position: fixed;
       bottom: 15px;
@@ -359,23 +532,47 @@
       -webkit-tap-highlight-color: transparent;
     }
     @keyframes pulse {
-      0% { transform: scale(1); opacity: 0.8; }
-      50% { transform: scale(1.1); opacity: 1; }
-      100% { transform: scale(1); opacity: 0.8; }
+      0% { transform: scale(1); opacity: 0.85; }
+      50% { transform: scale(1.08); opacity: 1; }
+      100% { transform: scale(1); opacity: 0.85; }
     }
   </style>
 </head>
 <body>
 
+  <!-- Dynamic Background Layers -->
+  <div class="bg-layer" id="bgLayer1"></div>
+  <div class="bg-layer" id="bgLayer2"></div>
+
   <!-- Fixed Page Flower Shower Overlay Container -->
   <div class="main-page-shower-container" id="mainShowerContainer"></div>
 
-  <!-- Entry Overlay -->
+  <!-- Beautified Entry Overlay with Lord Ganesha, Flowers & Toran -->
   <div class="overlay" id="overlay">
     <img src="your-overlay-bg.jpg" alt="Background" class="overlay-bg-img">
-    <h2>✨ You are Invited ✨</h2>
-    <p>Aishwarya & Shivam's Wedding</p>
-    <button class="open-btn" id="openBtn">✉️ Open Invitation</button>
+    
+    <!-- Floating Petal Container for Overlay -->
+    <div id="overlayPetalsContainer"></div>
+
+    <div class="overlay-card">
+      
+      
+      <!-- Lord Ganesha Image in Overlay -->
+      <img src="ganesha.png" alt="Lord Ganesha" class="overlay-ganesha">
+
+      <div class="ornament">✦ ━━━━ ✦</div>
+      <h2>You Are Cordially Invited</h2>
+      <p class="test">Aishwarya & Shivam</p>
+      <div class="ornament">✦ ━━━━ ✦</div>
+
+      <button class="open-btn" id="openBtn">✉️ Open Invitation</button>
+    </div>
+  </div>
+
+  <!-- Interactive + Auto-Spiral Scratch Layer -->
+  <div class="scratch-container" id="scratchContainer">
+    <canvas id="scratchCanvas"></canvas>
+    <div class="scratch-hint" id="scratchHint">✨ Revealing Invitation... ✨</div>
   </div>
 
   <!-- Invitation Card -->
@@ -385,8 +582,16 @@
     <h1>💍 Wedding Invitation 💍</h1>
     <h2>Aishwarya & Shivam</h2>
 
+    <!-- Dynamic Foreground Couple Section with Multiple Images -->
     <div class="couple">
-      <img src="couple.png" alt="Bride and Groom">
+      <div class="couple-slideshow" id="coupleSlideshow">
+        <img src="couple1.png" alt="Bride and Groom 1" class="active">
+        <img src="couple2.png" alt="Bride and Groom 2">
+        <img src="couple3.png" alt="Bride and Groom 3">
+        <img src="couple4.png" alt="Bride and Groom 4">
+        <img src="couple5.png" alt="Bride and Groom 5">
+      </div>
+
       <div class="heart" style="left: 15%;">❤️</div>
       <div class="heart" style="left: 45%;">💖</div>
       <div class="heart" style="left: 75%;">💞</div>
@@ -441,6 +646,189 @@
   <button class="music-btn" id="musicToggle" title="Toggle Music">🎵</button>
 
   <script>
+    /* ==========================================================
+       1. Dynamic Background Images Logic
+       ========================================================== */
+    const bgImages = ['floral-background.png', 'wb1.jpg', 'wb2.jpg'];
+    let currentBgIndex = 0;
+    const bgLayer1 = document.getElementById('bgLayer1');
+    const bgLayer2 = document.getElementById('bgLayer2');
+    let activeBgLayer = bgLayer1;
+
+    if (bgImages.length > 0) {
+      bgLayer1.style.backgroundImage = `url('${bgImages[0]}')`;
+    }
+
+    function changeBackground() {
+      if (bgImages.length <= 1) return;
+      currentBgIndex = (currentBgIndex + 1) % bgImages.length;
+      const nextImageUrl = `url('${bgImages[currentBgIndex]}')`;
+
+      if (activeBgLayer === bgLayer1) {
+        bgLayer2.style.backgroundImage = nextImageUrl;
+        bgLayer2.style.opacity = '1';
+        bgLayer1.style.opacity = '0';
+        activeBgLayer = bgLayer2;
+      } else {
+        bgLayer1.style.backgroundImage = nextImageUrl;
+        bgLayer1.style.opacity = '1';
+        bgLayer2.style.opacity = '0';
+        activeBgLayer = bgLayer1;
+      }
+    }
+    setInterval(changeBackground, 6000);
+
+    /* ==========================================================
+       2. Overlay Ambient Petal Shower Logic
+       ========================================================== */
+    const overlayPetalContainer = document.getElementById('overlayPetalsContainer');
+    const petalEmojis = ['🌸', '🌹', '🌺', '✨', '🌷'];
+
+    function spawnOverlayPetal() {
+      if (!overlayPetalContainer) return;
+      const petal = document.createElement('div');
+      petal.className = 'overlay-petal';
+      petal.textContent = petalEmojis[Math.floor(Math.random() * petalEmojis.length)];
+      petal.style.left = Math.random() * 100 + 'vw';
+      
+      const duration = 4 + Math.random() * 4;
+      petal.style.animationDuration = duration + 's';
+      
+      overlayPetalContainer.appendChild(petal);
+      setTimeout(() => petal.remove(), duration * 1000);
+    }
+    const overlayPetalInterval = setInterval(spawnOverlayPetal, 450);
+
+    /* ==========================================================
+       3. Dynamic Foreground Image Slideshow Logic
+       ========================================================== */
+    const slides = document.querySelectorAll('#coupleSlideshow img');
+    let currentSlide = 0;
+    const slideInterval = 3500;
+
+    function nextSlide() {
+      slides[currentSlide].classList.remove('active');
+      currentSlide = (currentSlide + 1) % slides.length;
+      slides[currentSlide].classList.add('active');
+    }
+    if (slides.length > 1) {
+      setInterval(nextSlide, slideInterval);
+    }
+
+    /* ==========================================================
+       4. Guided Spiral Auto-Scratch Canvas
+       ========================================================== */
+    const scratchContainer = document.getElementById("scratchContainer");
+    const canvas = document.getElementById("scratchCanvas");
+    const ctx = canvas.getContext("2d");
+    let isDrawing = false;
+    let isRevealed = false;
+    let animFrame = null;
+
+    function initScratchCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      // Fill Canvas with Gold Metallic Gradient
+      const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+      gradient.addColorStop(0, '#bf953f');
+      gradient.addColorStop(0.25, '#fcf6ba');
+      gradient.addColorStop(0.5, '#b38728');
+      gradient.addColorStop(0.75, '#fbf5b7');
+      gradient.addColorStop(1, '#aa771c');
+
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Gold Texture Text Overlay
+      ctx.fillStyle = "rgba(74, 0, 31, 0.2)";
+      ctx.font = "bold 26px Georgia";
+      ctx.textAlign = "center";
+      for (let y = 80; y < canvas.height; y += 120) {
+        for (let x = 120; x < canvas.width; x += 220) {
+          ctx.fillText("✨ Revealing... ✨", x, y);
+        }
+      }
+
+      ctx.globalCompositeOperation = "destination-out";
+      ctx.lineWidth = Math.min(window.innerWidth * 0.18, 100);
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+    }
+
+    function revealInvitation() {
+      if (isRevealed) return;
+      isRevealed = true;
+      if (animFrame) cancelAnimationFrame(animFrame);
+
+      scratchContainer.classList.add("hidden");
+      setTimeout(() => {
+        scratchContainer.style.display = "none";
+      }, 600);
+    }
+
+    function performManualScratch(e) {
+      if (!isDrawing || isRevealed) return;
+
+      const rect = canvas.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+      const x = clientX - rect.left;
+      const y = clientY - rect.top;
+
+      ctx.beginPath();
+      ctx.arc(x, y, ctx.lineWidth / 2, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // Interactive Scratch Events
+    canvas.addEventListener("mousedown", (e) => { isDrawing = true; performManualScratch(e); });
+    canvas.addEventListener("mousemove", performManualScratch);
+    canvas.addEventListener("mouseup", () => { isDrawing = false; });
+
+    canvas.addEventListener("touchstart", (e) => { isDrawing = true; performManualScratch(e); }, { passive: true });
+    canvas.addEventListener("touchmove", performManualScratch, { passive: true });
+    canvas.addEventListener("touchend", () => { isDrawing = false; });
+
+    function startSpiralScratchEffect() {
+      initScratchCanvas();
+      scratchContainer.classList.add("active");
+
+      let angle = 0;
+      let radius = 10;
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+      const maxRadius = Math.max(canvas.width, canvas.height) * 0.7;
+
+      function animateSpiral() {
+        if (isRevealed) return;
+
+        for (let i = 0; i < 4; i++) {
+          const x = centerX + Math.cos(angle) * radius;
+          const y = centerY + Math.sin(angle) * radius;
+
+          ctx.beginPath();
+          ctx.arc(x, y, ctx.lineWidth / 2, 0, Math.PI * 2);
+          ctx.fill();
+
+          angle += 0.25;
+          radius += 4.5;
+        }
+
+        if (radius >= maxRadius) {
+          revealInvitation();
+        } else {
+          animFrame = requestAnimationFrame(animateSpiral);
+        }
+      }
+
+      animateSpiral();
+    }
+
+    /* ==========================================================
+       5. General Website Interactions & Animations
+       ========================================================== */
     const audio = document.getElementById("weddingMusic");
     const musicBtn = document.getElementById("musicToggle");
     const overlay = document.getElementById("overlay");
@@ -449,7 +837,6 @@
 
     const flowerEmojis = ['🌸', '🌺', '🌼', '🌹', '🌷', '✨'];
 
-    // Continuous flower spawning from main page top-left & top-right corners
     function spawnMainPageFlower(corner) {
       const flower = document.createElement("div");
       const duration = 3.5 + Math.random() * 2.5;
@@ -471,15 +858,20 @@
       setTimeout(() => flower.remove(), duration * 1000);
     }
 
-    // Continuously spawn flowers non-stop
     setInterval(() => {
       spawnMainPageFlower('topLeft');
       spawnMainPageFlower('topRight');
     }, 350);
 
-    // Audio Trigger
+    // Audio & Scratch Trigger
     openBtn.addEventListener("click", () => {
+      clearInterval(overlayPetalInterval);
       overlay.classList.add("hidden");
+      
+      // Start Spiral Scratch Reveal
+      startSpiralScratchEffect();
+
+      // Play audio with fade-in
       audio.volume = 0;
       audio.play().then(() => {
         let vol = 0;
@@ -494,18 +886,17 @@
       }).catch(err => console.log("Audio play error:", err));
     });
 
-    // Manual Toggle
     musicBtn.addEventListener("click", () => {
       if (audio.paused) {
         audio.play();
         musicBtn.textContent = "🎵";
       } else {
         audio.pause();
-        musicBtn.textContent = "🔇";
+        musicBtn.textContent = "0️⃣";
       }
     });
 
-    // Set target wedding date and time
+    // Countdown Logic
     const weddingDate = new Date("November 21, 2026 00:00:00").getTime();
 
     function updateCountdown() {
@@ -531,7 +922,6 @@
       document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
     }
 
-    // Run update immediately and then every 1 second
     updateCountdown();
     setInterval(updateCountdown, 1000);
 
