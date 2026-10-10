@@ -1,964 +1,884 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wedding Invitation</title>
-  
-  <!-- Pre-loading Elegant Web Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Invitation</title>
+    <!-- Pre-loading Elegant Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Georgia', serif;
+            margin: 0;
+            padding: 0;
+            color: #4a2c2a;
+            overflow-x: hidden;
+            min-height: 100vh;
+            background-color: #2b1110;
+        }
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-    body {
-      font-family: 'Georgia', serif;
-      margin: 0;
-      padding: 0;
-      color: #4a2c2a;
-      overflow-x: hidden;
-      min-height: 100vh;
-      background-color: #2b1110;
-    }
+        /* Dynamic Background Image Layers */
+        .bg-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+        #bgLayer1 { opacity: 1; }
+        #bgLayer2 { opacity: 0; }
 
-    /* Dynamic Background Image Layers */
-    .bg-layer {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      z-index: 0;
-      transition: opacity 1.5s ease-in-out;
-    }
-    #bgLayer1 { opacity: 1; }
-    #bgLayer2 { opacity: 0; }
+        /* Entry Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+            opacity: 1;
+            overflow: hidden;
+        }
+        .overlay-bg-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            filter: brightness(0.35);
+        }
+        .overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
 
-    /* Entry Overlay */
-    .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      color: #fff;
-      text-align: center;
-      padding: 20px;
-      transition: opacity 0.8s ease, visibility 0.8s ease;
-      opacity: 1;
-      overflow: hidden;
-    }
+        /* Floating Overlay Petals & Flowers */
+        .overlay-petal {
+            position: absolute;
+            top: -40px;
+            font-size: clamp(18px, 4vw, 28px);
+            pointer-events: none;
+            z-index: 1;
+            animation: overlayPetalFall linear infinite;
+        }
+        @keyframes overlayPetalFall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
+        }
 
-    .overlay-bg-img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: -1;
-      filter: brightness(0.35);
-    }
-    
-    .overlay.hidden {
-      opacity: 0;
-      visibility: hidden;
-    }
+        /* Glassmorphism Card Frame with Floral Decor for Overlay */
+        .overlay-card {
+            position: relative;
+            background: rgba(43, 17, 16, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 2px solid rgba(212, 175, 55, 0.6);
+            padding: clamp(25px, 5vw, 45px) clamp(20px, 5vw, 45px);
+            border-radius: 28px;
+            box-shadow: 0 0 45px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(212, 175, 55, 0.2);
+            max-width: 580px;
+            width: 90%;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 2;
+            overflow-y: auto;
+        }
 
-    /* Floating Overlay Petals & Flowers */
-    .overlay-petal {
-      position: absolute;
-      top: -40px;
-      font-size: clamp(18px, 4vw, 28px);
-      pointer-events: none;
-      z-index: 1;
-      animation: overlayPetalFall linear infinite;
-    }
+        /* Decorative Corner Floral Patterns */
+        .overlay-card::before, .overlay-card::after {
+            content: '🌸';
+            position: absolute;
+            font-size: clamp(20px, 5vw, 32px);
+            opacity: 0.85;
+            filter: drop-shadow(0 0 8px gold);
+        }
+        .overlay-card::before { top: 12px; left: 16px; }
+        .overlay-card::after { top: 12px; right: 16px; }
 
-    @keyframes overlayPetalFall {
-      0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-      10% { opacity: 1; }
-      90% { opacity: 0.8; }
-      100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
-    }
+        /* Lord Ganesha Icon in Overlay */
+        .overlay-ganesha {
+            width: clamp(65px, 18vw, 100px);
+            height: auto;
+            margin: 2px 0 8px 0;
+            filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.85));
+            animation: ganeshaGlow 3s ease-in-out infinite alternate;
+        }
+        @keyframes ganeshaGlow {
+            from { transform: scale(1); filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.7)); }
+            to { transform: scale(1.04); filter: drop-shadow(0 0 20px rgba(255, 215, 0, 1)); }
+        }
 
-    /* Glassmorphism Card Frame with Floral Decor for Overlay */
-    .overlay-card {
-      position: relative;
-      background: rgba(43, 17, 16, 0.75);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 2px solid rgba(212, 175, 55, 0.6);
-      padding: clamp(35px, 6vw, 55px) clamp(20px, 5vw, 45px);
-      border-radius: 28px;
-      box-shadow: 0 0 45px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(212, 175, 55, 0.2);
-      max-width: 580px;
-      width: 90%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      z-index: 2;
-      overflow: hidden;
-    }
+        .ornament {
+            color: #D4AF37;
+            font-size: clamp(0.8em, 2.5vw, 1.1em);
+            letter-spacing: 6px;
+            opacity: 0.9;
+            margin: 2px 0;
+        }
 
-    /* Decorative Corner Floral Patterns */
-    .overlay-card::before, .overlay-card::after {
-      content: '🌸';
-      position: absolute;
-      font-size: clamp(20px, 5vw, 32px);
-      opacity: 0.85;
-      filter: drop-shadow(0 0 8px gold);
-    }
-    .overlay-card::before { top: 12px; left: 16px; }
-    .overlay-card::after { top: 12px; right: 16px; }
+        /* Royal Gold Header Typography */
+        .overlay h2 {
+            font-family: 'Cinzel', 'Georgia', serif;
+            font-size: clamp(1.4em, 4.8vw, 2.6em);
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin: 8px 0 4px 0;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #FFE066 0%, #FFFFFF 25%, #F5AF19 50%, #E65C00 75%, #FFD700 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: goldShimmer 4s linear infinite;
+            filter: drop-shadow(0 4px 15px rgba(255, 215, 0, 0.35));
+            line-height: 1.25;
+        }
+        @keyframes goldShimmer {
+            to { background-position: 200% center; }
+        }
 
-    /* Top Marigold Garland Toran */
-    .overlay-garland {
-      font-size: clamp(1.2em, 4.5vw, 2em);
-      margin-bottom: 10px;
-      letter-spacing: 6px;
-      filter: drop-shadow(0 2px 6px rgba(255, 140, 0, 0.7));
-      user-select: none;
-    }
+        /* Elegant Calligraphy Subtitle */
+        .overlay p.test {
+            font-family: 'Great Vibes', 'Georgia', cursive;
+            font-size: clamp(1.6em, 5vw, 2.5em);
+            color: #FFF8E7;
+            margin: 2px 0 12px 0;
+            letter-spacing: 1px;
+            text-shadow: 0 0 12px rgba(255, 215, 0, 0.6), 0 2px 4px rgba(0, 0, 0, 0.9);
+            background: none;
+            -webkit-text-fill-color: initial;
+        }
 
-    /* Lord Ganesha Icon in Overlay */
-    .overlay-ganesha {
-      width: clamp(75px, 22vw, 120px);
-      height: auto;
-      margin: 5px 0 12px 0;
-      filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.85));
-      animation: ganeshaGlow 3s ease-in-out infinite alternate;
-    }
+        /* Luxury Button Styling */
+        .open-btn {
+            margin-top: 8px;
+            margin-bottom: 5px;
+            padding: 14px 32px;
+            font-size: clamp(0.9em, 3.2vw, 1.1em);
+            font-family: 'Cinzel', 'Georgia', serif;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #FFFFFF;
+            background: linear-gradient(135deg, #d4af37, #8b2626);
+            border: 1px solid rgba(255, 224, 102, 0.8);
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            animation: pulse 2.2s infinite;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .open-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.85);
+        }
 
-    @keyframes ganeshaGlow {
-      from { transform: scale(1); filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.7)); }
-      to { transform: scale(1.04); filter: drop-shadow(0 0 20px rgba(255, 215, 0, 1)); }
-    }
+        /* Scratch/Scribble Overlay Styles */
+        .scratch-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 9998;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            opacity: 1;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+        .scratch-container.active { display: flex; }
+        .scratch-container.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        #scratchCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            touch-action: none;
+            cursor: pointer;
+        }
+        .scratch-hint {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #7a121d;
+            font-size: clamp(1em, 3.5vw, 1.3em);
+            font-weight: bold;
+            background: rgba(255, 248, 231, 0.95);
+            padding: 10px 22px;
+            border-radius: 30px;
+            border: 2px solid #d4af37;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            pointer-events: none;
+            animation: pulse 1.5s infinite;
+            text-align: center;
+            z-index: 10;
+        }
 
-    .ornament {
-      color: #D4AF37;
-      font-size: clamp(0.9em, 3vw, 1.2em);
-      letter-spacing: 6px;
-      opacity: 0.9;
-      margin: 4px 0;
-    }
+        /* Card Container */
+        .card {
+            background: rgba(255, 248, 231, 0.95);
+            margin: 20px auto 80px auto;
+            padding: clamp(20px, 5vw, 40px) clamp(12px, 3.5vw, 30px);
+            border-radius: 20px;
+            width: 92%;
+            max-width: 550px;
+            box-shadow: 0 0 25px rgba(0,0,0,0.3);
+            text-align: center;
+            border: clamp(4px, 1.5vw, 10px) solid #d4af37;
+            position: relative;
+            overflow: hidden;
+            z-index: 2;
+            height: auto;
+        }
 
-    /* Royal Gold Header Typography */
-    .overlay h2 {
-      font-family: 'Cinzel', 'Georgia', serif;
-      font-size: clamp(1.6em, 5.5vw, 3.1em);
-      font-weight: 700;
-      letter-spacing: 2px;
-      margin: 12px 0 6px 0;
-      text-transform: uppercase;
-      background: linear-gradient(135deg, #FFE066 0%, #FFFFFF 25%, #F5AF19 50%, #E65C00 75%, #FFD700 100%);
-      background-size: 200% auto;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: goldShimmer 4s linear infinite;
-      filter: drop-shadow(0 4px 15px rgba(255, 215, 0, 0.35));
-      line-height: 1.25;
-    }
+        h1 {
+            font-size: clamp(1.1em, 5vw, 2.2em);
+            margin-top: 10px;
+            margin-bottom: 10px;
+            line-height: 1.2;
+            word-break: break-word;
+            background: linear-gradient(90deg, #b22222, #ffd700, #b22222);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 3s linear infinite;
+        }
+        h3 {
+            font-size: clamp(1.1em, 5vw, 2.2em);
+            margin-top: 10px;
+            margin-bottom: 10px;
+            line-height: 1.2;
+            word-break: break-word;
+            background: linear-gradient(90deg, #b22222, #ffd700, #b22222);
+            background-size: 50% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 3s linear infinite;
+        }
+        @keyframes shimmer {
+            to { background-position: 200% center; }
+        }
 
-    @keyframes goldShimmer {
-      to { background-position: 200% center; }
-    }
+        .card h2 {
+            font-size: clamp(1.2em, 5vw, 2em);
+            color: #d2691e;
+            margin-top: 0;
+            line-height: 1.3;
+            word-wrap: break-word;
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
 
-    /* Elegant Calligraphy Subtitle */
-    .overlay p.test {
-      font-family: 'Great Vibes', 'Georgia', cursive;
-      font-size: clamp(1.8em, 5.5vw, 2.8em);
-      color: #FFF8E7;
-      margin: 4px 0 18px 0;
-      letter-spacing: 1px;
-      text-shadow: 0 0 12px rgba(255, 215, 0, 0.6), 0 2px 4px rgba(0, 0, 0, 0.9);
-      background: none;
-      -webkit-text-fill-color: initial;
-    }
+        .details {
+            font-size: clamp(0.85em, 3.2vw, 1.1em);
+            margin-top: 20px;
+            line-height: 1.7;
+            white-space: normal;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            padding: 0 5px;
+            animation: breatheGlow 4s infinite alternate;
+        }
+        @keyframes breatheGlow {
+            from { text-shadow: 0 0 3px gold; }
+            to { text-shadow: 0 0 12px orange; }
+        }
 
-    /* Luxury Button Styling */
-    .open-btn {
-      margin-top: 10px;
-      padding: 16px 38px;
-      font-size: clamp(0.95em, 3.5vw, 1.15em);
-      font-family: 'Cinzel', 'Georgia', serif;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: #FFFFFF;
-      background: linear-gradient(135deg, #d4af37, #8b2626);
-      border: 1px solid rgba(255, 224, 102, 0.8);
-      border-radius: 50px;
-      cursor: pointer;
-      box-shadow: 0 0 25px rgba(212, 175, 55, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.2);
-      transition: all 0.3s ease;
-      animation: pulse 2.2s infinite;
-      -webkit-tap-highlight-color: transparent;
-    }
+        /* Countdown Styling */
+        .countdown-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: clamp(4px, 1.8vw, 8px);
+            margin: 18px 0;
+            font-family: serif;
+        }
+        .countdown-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .countdown-badge {
+            background-color: #8b2626;
+            color: #ffffff;
+            padding: 4px clamp(6px, 2vw, 10px);
+            border-radius: 16px;
+            font-weight: bold;
+            font-size: clamp(12px, 3.2vw, 15px);
+            min-width: 20px;
+            text-align: center;
+        }
+        .countdown-label {
+            color: #6b1f1f;
+            font-size: clamp(11px, 2.8vw, 13px);
+            font-weight: 600;
+        }
 
-    .open-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 15px rgba(255, 215, 0, 0.85);
-    }
+        .map-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #b22222;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: clamp(0.9em, 3.5vw, 1.1em);
+            word-wrap: break-word;
+        }
 
-    /* Scratch/Scribble Overlay Styles */
-    .scratch-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 9998;
-      display: none;
-      justify-content: center;
-      align-items: center;
-      opacity: 1;
-      transition: opacity 0.8s ease, visibility 0.8s ease;
-    }
+        .ganesha {
+            width: clamp(70px, 20vw, 120px);
+            height: auto;
+            margin-bottom: 10px;
+            mix-blend-mode: multiply;
+        }
 
-    .scratch-container.active {
-      display: flex;
-    }
+        .couple {
+            margin: 15px auto;
+            animation: gentleBounce 3s ease-in-out infinite;
+            position: relative;
+            display: block;
+            width: 100%;
+            max-width: 280px;
+            height: 350px;
+        }
+        .couple-slideshow {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        .couple-slideshow img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            mix-blend-mode: multiply;
+            mask-image: radial-gradient(circle, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%);
+            -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%);
+            opacity: 0;
+            transition: opacity 1.2s ease-in-out;
+        }
+        .couple-slideshow img.active { opacity: 1; }
 
-    .scratch-container.hidden {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
+        .heart {
+            position: absolute;
+            color: #ff4d6d;
+            font-size: clamp(16px, 4.5vw, 28px);
+            opacity: 0.8;
+            animation: floatHearts 6s linear infinite;
+            z-index: 2;
+        }
+        @keyframes gentleBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+        @keyframes floatHearts {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-130px) scale(1.3); opacity: 0; }
+        }
 
-    #scratchCanvas {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      touch-action: none;
-      cursor: pointer;
-    }
+        .main-page-shower-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 5;
+            overflow: hidden;
+        }
+        .page-showering-flower {
+            position: absolute;
+            font-size: clamp(20px, 4vw, 32px);
+            pointer-events: none;
+        }
+        .shower-top-left { animation: showerFromTopLeft linear forwards; }
+        .shower-top-right { animation: showerFromTopRight linear forwards; }
+        @keyframes showerFromTopLeft {
+            0% { transform: translate(0, -30px) rotate(0deg) scale(0.6); opacity: 0; }
+            15% { opacity: 1; }
+            80% { opacity: 0.9; }
+            100% { transform: translate(35vw, 105vh) rotate(360deg) scale(1.2); opacity: 0; }
+        }
+        @keyframes showerFromTopRight {
+            0% { transform: translate(0, -30px) rotate(0deg) scale(0.6); opacity: 0; }
+            15% { opacity: 1; }
+            80% { opacity: 0.9; }
+            100% { transform: translate(-35vw, 105vh) rotate(-360deg) scale(1.2); opacity: 0; }
+        }
 
-    .scratch-hint {
-      position: absolute;
-      bottom: 80px;
-      left: 50%;
-      transform: translateX(-50%);
-      color: #7a121d;
-      font-size: clamp(1em, 3.5vw, 1.3em);
-      font-weight: bold;
-      background: rgba(255, 248, 231, 0.95);
-      padding: 10px 22px;
-      border-radius: 30px;
-      border: 2px solid #d4af37;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-      pointer-events: none;
-      animation: pulse 1.5s infinite;
-      text-align: center;
-      z-index: 10;
-    }
+        .petal {
+            position: fixed;
+            top: -50px;
+            width: 50px;
+            height: 50px;
+            background-image: url('marigold.png');
+            background-size: cover;
+            animation: fall linear infinite;
+            z-index: 1;
+            pointer-events: none;
+        }
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(105vh) rotate(360deg); }
+        }
 
-    /* Card Container */
-    .card {
-      background: rgba(255, 248, 231, 0.95);
-      margin: 20px auto 80px auto;
-      padding: clamp(20px, 5vw, 40px) clamp(12px, 3.5vw, 30px);
-      border-radius: 20px;
-      width: 92%;
-      max-width: 550px;
-      box-shadow: 0 0 25px rgba(0,0,0,0.3);
-      text-align: center;
-      border: clamp(4px, 1.5vw, 10px) solid #d4af37;
-      position: relative;
-      overflow: hidden;
-      z-index: 2;
-      height: auto;
-    }
-	
-    h1 {
-      font-size: clamp(1.1em, 5vw, 2.2em);
-      margin-top: 10px;
-      margin-bottom: 10px;
-      line-height: 1.2;
-      word-break: break-word;
-      background: linear-gradient(90deg, #b22222, #ffd700, #b22222);
-      background-size: 200% auto;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: shimmer 3s linear infinite;
-    }
-	  h3 {
-      font-size: clamp(1.1em, 5vw, 2.2em);
-      margin-top: 10px;
-      margin-bottom: 10px;
-      line-height: 1.2;
-      word-break: break-word;
-      background: linear-gradient(90deg, #b22222, #ffd700, #b22222);
-      background-size: 50% auto;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: shimmer 3s linear infinite;
-    }
-    @keyframes shimmer {
-      to { background-position: 200% center; }
-    }
-    
-    .card h2 {
-      font-size: clamp(1.2em, 5vw, 2em);
-      color: #d2691e;
-      margin-top: 0;
-      line-height: 1.3;
-      word-wrap: break-word;
-      animation: bounce 2s infinite;
-    }
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-6px); }
-    }
+        .bell {
+            position: fixed;
+            top: -60px;
+            width: 35px;
+            height: 35px;
+            background-image: url('bell.png');
+            background-size: cover;
+            animation: swing linear infinite;
+            z-index: 1;
+            pointer-events: none;
+        }
+        @keyframes swing {
+            0% { transform: translateY(0) rotate(-10deg); }
+            50% { transform: translateY(50vh) rotate(10deg); }
+            100% { transform: translateY(105vh) rotate(-10deg); }
+        }
 
-    .details {
-      font-size: clamp(0.85em, 3.2vw, 1.1em);
-      margin-top: 20px;
-      line-height: 1.7;
-      white-space: normal;
-      word-wrap: break-word;
-      overflow-wrap: break-word;
-      padding: 0 5px;
-      animation: breatheGlow 4s infinite alternate;
-    }
-    @keyframes breatheGlow {
-      from { text-shadow: 0 0 3px gold; }
-      to { text-shadow: 0 0 12px orange; }
-    }
+        .diya {
+            position: fixed;
+            bottom: 15px;
+            width: clamp(35px, 10vw, 60px);
+            height: clamp(35px, 10vw, 60px);
+            background-image: url('diya.png');
+            background-size: cover;
+            animation: flicker 1.5s infinite alternate;
+            z-index: 3;
+            pointer-events: none;
+        }
+        .diya.left { left: 10px; }
+        .diya.right { right: 10px; }
+        @keyframes flicker {
+            from { filter: drop-shadow(0 0 4px gold); }
+            to { filter: drop-shadow(0 0 12px orange); }
+        }
 
-    /* Countdown Styling */
-    .countdown-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: clamp(4px, 1.8vw, 8px);
-      margin: 18px 0;
-      font-family: serif;
-    }
-    .countdown-item {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .countdown-badge {
-      background-color: #8b2626;
-      color: #ffffff;
-      padding: 4px clamp(6px, 2vw, 10px);
-      border-radius: 16px;
-      font-weight: bold;
-      font-size: clamp(12px, 3.2vw, 15px);
-      min-width: 20px;
-      text-align: center;
-    }
-    .countdown-label {
-      color: #6b1f1f;
-      font-size: clamp(11px, 2.8vw, 13px);
-      font-weight: 600;
-    }
-
-    .map-link {
-      display: inline-block;
-      margin-top: 20px;
-      color: #b22222;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: clamp(0.9em, 3.5vw, 1.1em);
-      word-wrap: break-word;
-    }
-
-    .ganesha {
-      width: clamp(70px, 20vw, 120px);
-      height: auto;
-      margin-bottom: 10px;
-      mix-blend-mode: multiply;
-    }
-    
-    .couple {
-      margin: 15px auto;
-      animation: gentleBounce 3s ease-in-out infinite;
-      position: relative;
-      display: block;
-      width: 100%;
-      max-width: 280px;
-      height: 350px;
-    }
-
-    .couple-slideshow {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      border-radius: 15px;
-      overflow: hidden;
-    }
-
-    .couple-slideshow img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      mix-blend-mode: multiply;
-      mask-image: radial-gradient(circle, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%);
-      -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%);
-      opacity: 0;
-      transition: opacity 1.2s ease-in-out;
-    }
-
-    .couple-slideshow img.active {
-      opacity: 1;
-    }
-
-    .heart {
-      position: absolute;
-      color: #ff4d6d;
-      font-size: clamp(16px, 4.5vw, 28px);
-      opacity: 0.8;
-      animation: floatHearts 6s linear infinite;
-      z-index: 2;
-    }
-    @keyframes gentleBounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-6px); }
-    }
-    @keyframes floatHearts {
-      0% { transform: translateY(0) scale(1); opacity: 1; }
-      100% { transform: translateY(-130px) scale(1.3); opacity: 0; }
-    }
-
-    .main-page-shower-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      z-index: 5;
-      overflow: hidden;
-    }
-
-    .page-showering-flower {
-      position: absolute;
-      font-size: clamp(20px, 4vw, 32px);
-      pointer-events: none;
-    }
-
-    .shower-top-left { animation: showerFromTopLeft linear forwards; }
-    .shower-top-right { animation: showerFromTopRight linear forwards; }
-
-    @keyframes showerFromTopLeft {
-      0% { transform: translate(0, -30px) rotate(0deg) scale(0.6); opacity: 0; }
-      15% { opacity: 1; }
-      80% { opacity: 0.9; }
-      100% { transform: translate(35vw, 105vh) rotate(360deg) scale(1.2); opacity: 0; }
-    }
-
-    @keyframes showerFromTopRight {
-      0% { transform: translate(0, -30px) rotate(0deg) scale(0.6); opacity: 0; }
-      15% { opacity: 1; }
-      80% { opacity: 0.9; }
-      100% { transform: translate(-35vw, 105vh) rotate(-360deg) scale(1.2); opacity: 0; }
-    }
-
-    .petal {
-      position: fixed;
-      top: -50px;
-      width: 50px;
-      height: 50px;
-      background-image: url('marigold.png');
-      background-size: cover;
-      animation: fall linear infinite;
-      z-index: 1;
-      pointer-events: none;
-    }
-    @keyframes fall {
-      0% { transform: translateY(0) rotate(0deg); }
-      100% { transform: translateY(105vh) rotate(360deg); }
-    }
-
-    .bell {
-      position: fixed;
-      top: -60px;
-      width: 35px;
-      height: 35px;
-      background-image: url('bell.png');
-      background-size: cover;
-      animation: swing linear infinite;
-      z-index: 1;
-      pointer-events: none;
-    }
-    @keyframes swing {
-      0% { transform: translateY(0) rotate(-10deg); }
-      50% { transform: translateY(50vh) rotate(10deg); }
-      100% { transform: translateY(105vh) rotate(-10deg); }
-    }
-
-    .diya {
-      position: fixed;
-      bottom: 15px;
-      width: clamp(35px, 10vw, 60px);
-      height: clamp(35px, 10vw, 60px);
-      background-image: url('diya.png');
-      background-size: cover;
-      animation: flicker 1.5s infinite alternate;
-      z-index: 3;
-      pointer-events: none;
-    }
-    .diya.left { left: 10px; }
-    .diya.right { right: 10px; }
-    @keyframes flicker {
-      from { filter: drop-shadow(0 0 4px gold); }
-      to { filter: drop-shadow(0 0 12px orange); }
-    }
-
-    .music-btn {
-      position: fixed;
-      bottom: 15px;
-      right: 15px;
-      font-size: clamp(1.4em, 4vw, 2em);
-      background: rgba(255, 255, 255, 0.9);
-      border: 2px solid #d4af37;
-      border-radius: 50%;
-      width: clamp(40px, 11vw, 50px);
-      height: clamp(40px, 11vw, 50px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      animation: pulse 2s infinite;
-      cursor: pointer;
-      z-index: 10;
-      -webkit-tap-highlight-color: transparent;
-    }
-    @keyframes pulse {
-      0% { transform: scale(1); opacity: 0.85; }
-      50% { transform: scale(1.08); opacity: 1; }
-      100% { transform: scale(1); opacity: 0.85; }
-    }
-  </style>
+        .music-btn {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            font-size: clamp(1.4em, 4vw, 2em);
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #d4af37;
+            border-radius: 50%;
+            width: clamp(40px, 11vw, 50px);
+            height: clamp(40px, 11vw, 50px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse 2s infinite;
+            cursor: pointer;
+            z-index: 10;
+            -webkit-tap-highlight-color: transparent;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.85; }
+            50% { transform: scale(1.08); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.85; }
+        }
+    </style>
 </head>
 <body>
 
-  <!-- Dynamic Background Layers -->
-  <div class="bg-layer" id="bgLayer1"></div>
-  <div class="bg-layer" id="bgLayer2"></div>
+    <!-- Dynamic Background Layers -->
+    <div class="bg-layer" id="bgLayer1"></div>
+    <div class="bg-layer" id="bgLayer2"></div>
 
-  <!-- Fixed Page Flower Shower Overlay Container -->
-  <div class="main-page-shower-container" id="mainShowerContainer"></div>
+    <!-- Fixed Page Flower Shower Overlay Container -->
+    <div class="main-page-shower-container" id="mainShowerContainer"></div>
 
-  <!-- Beautified Entry Overlay with Lord Ganesha, Flowers & Toran -->
-  <div class="overlay" id="overlay">
-    <img src="your-overlay-bg.jpg" alt="Background" class="overlay-bg-img">
-    
-    <!-- Floating Petal Container for Overlay -->
-    <div id="overlayPetalsContainer"></div>
-
-    <div class="overlay-card">
-      
-      
-      <!-- Lord Ganesha Image in Overlay -->
-      <img src="ganesha.png" alt="Lord Ganesha" class="overlay-ganesha">
-<h3>ॐ श्री गणेशाय नमः</h3>	
-      <div class="ornament">✦ ━━━━ ✦</div>
-      <h2>You Are Cordially Invited</h2>
-      <p class="test">Aishwarya & Shivam</p>
-      <div class="ornament">✦ ━━━━ ✦</div>
-
-      <button class="open-btn" id="openBtn">✉️ Open Invitation</button>
-    </div>
-  </div>
-
-  <!-- Interactive + Auto-Spiral Scratch Layer -->
-  <div class="scratch-container" id="scratchContainer">
-    <canvas id="scratchCanvas"></canvas>
-    <div class="scratch-hint" id="scratchHint">✨ Revealing Invitation... ✨</div>
-  </div>
-
-  <!-- Invitation Card -->
-  <div class="card">
-    <img src="ganesha.png" alt="Lord Ganesha" class="ganesha">
-	<h1> ॐ श्री गणेशाय नमः </h1>
-    <h1>💍 Wedding Invitation 💍</h1>
-    <h2>Aishwarya & Shivam</h2>
-
-    <!-- Dynamic Foreground Couple Section with Multiple Images -->
-    <div class="couple">
-      <div class="couple-slideshow" id="coupleSlideshow">
-        <img src="couple1.png" alt="Bride and Groom 1" class="active">
-        <img src="couple2.png" alt="Bride and Groom 2">
-        <img src="couple3.png" alt="Bride and Groom 3">
-        <img src="couple4.png" alt="Bride and Groom 4">
-        <img src="couple5.png" alt="Bride and Groom 5">
-      </div>
-
-      <div class="heart" style="left: 15%;">❤️</div>
-      <div class="heart" style="left: 45%;">💖</div>
-      <div class="heart" style="left: 75%;">💞</div>
-      <div class="heart" style="left: 85%;">💞</div>
-      <div class="heart" style="left: 95%;">💞</div>
-      <div class="heart" style="right: 25%;">❤️</div>
-      <div class="heart" style="right: 55%;">💖</div>
-      <div class="heart" style="right: 85%;">💞</div>
-      <div class="heart" style="right: 95%;">💞</div>
+    <!-- Beautified Entry Overlay with Lord Ganesha, Flowers & Toran -->
+    <div class="overlay" id="overlay">
+        <img src="your-overlay-bg.jpg" alt="Background" class="overlay-bg-img">
+        <!-- Floating Petal Container for Overlay -->
+        <div id="overlayPetalsContainer"></div>
+        <div class="overlay-card">
+            <!-- Lord Ganesha Image in Overlay -->
+            <img src="ganesha.png" alt="Lord Ganesha" class="overlay-ganesha">
+            <h3>ॐ श्री गणेशाय नमः</h3>
+            <div class="ornament">✦ ━━━━ ✦</div>
+            <h2>You Are Cordially Invited</h2>
+            <p class="test">Aishwarya & Shivam</p>
+            <div class="ornament">✦ ━━━━ ✦</div>
+            <button class="open-btn" id="openBtn">✉️ Open Invitation</button>
+        </div>
     </div>
 
-    <p class="details">
-      ✨ With hearts full of joy, we invite you to join us ✨<br>
-      💍 On <strong>21st November 2026, 8 PM Onwards</strong><br>
-      🏰 At <strong>LA MANSION, New Delhi</strong><br>
-      🌺 To celebrate the sacred union of Aishwarya & Shivam 🌺
-    </p>
-
-    <!-- Dynamic Countdown Display -->
-    <div class="countdown-container">
-      <div class="countdown-item">
-        <span id="days" class="countdown-badge">00</span>
-        <span class="countdown-label">Days</span>
-      </div>
-      <span style="color: #a87b32;">•</span>
-      <div class="countdown-item">
-        <span id="hours" class="countdown-badge">00</span>
-        <span class="countdown-label">Hours</span>
-      </div>
-      <span style="color: #a87b32;">•</span>
-      <div class="countdown-item">
-        <span id="minutes" class="countdown-badge">00</span>
-        <span class="countdown-label">Mins</span>
-      </div>
-      <span style="color: #a87b32;">•</span>
-      <div class="countdown-item">
-        <span id="seconds" class="countdown-badge">00</span>
-        <span class="countdown-label">Secs</span>
-      </div>
+    <!-- Interactive + Auto-Spiral Scratch Layer -->
+    <div class="scratch-container" id="scratchContainer">
+        <canvas id="scratchCanvas"></canvas>
+        <div class="scratch-hint" id="scratchHint">✨ Revealing Invitation... ✨</div>
     </div>
 
-    <p>
-      <a href="https://maps.app.goo.gl/m43dvr7o9L63gA4F8" target="_blank" class="map-link">📍 View Venue on Google Maps</a>
-    </p>
-  </div>
+    <!-- Invitation Card -->
+    <div class="card">
+        <img src="ganesha.png" alt="Lord Ganesha" class="ganesha">
+        <h1> ॐ श्री गणेशाय नमः </h1>
+        <h1>💍 Wedding Invitation 💍</h1>
+        <h2>Aishwarya & Shivam</h2>
 
-  <audio id="weddingMusic" src="wedding-music.mp3" loop playsinline></audio>
+        <!-- Dynamic Foreground Couple Section with Multiple Images -->
+        <div class="couple">
+            <div class="couple-slideshow" id="coupleSlideshow">
+                <img src="couple1.png" alt="Bride and Groom 1" class="active">
+                <img src="couple2.png" alt="Bride and Groom 2">
+                <img src="couple3.png" alt="Bride and Groom 3">
+                <img src="couple4.png" alt="Bride and Groom 4">
+                <img src="couple5.png" alt="Bride and Groom 5">
+            </div>
+            <div class="heart" style="left: 15%;">❤️</div>
+            <div class="heart" style="left: 45%;">💖</div>
+            <div class="heart" style="left: 75%;">💞</div>
+            <div class="heart" style="left: 85%;">💞</div>
+            <div class="heart" style="left: 95%;">💞</div>
+            <div class="heart" style="right: 25%;">❤️</div>
+            <div class="heart" style="right: 55%;">💖</div>
+            <div class="heart" style="right: 85%;">💞</div>
+            <div class="heart" style="right: 95%;">💞</div>
+        </div>
 
-  <div class="diya left"></div>
-  <div class="diya right"></div>
+        <p class="details">
+            ✨ With hearts full of joy, we invite you to join us ✨<br>
+            💍 On <strong>21st November 2026, 8 PM Onwards</strong><br>
+            🏰 At <strong>LA MANSION, New Delhi</strong><br>
+            🌺 To celebrate the sacred union of Aishwarya & Shivam 🌺
+        </p>
 
-  <button class="music-btn" id="musicToggle" title="Toggle Music">🎵</button>
+        <!-- Dynamic Countdown Display -->
+        <div class="countdown-container">
+            <div class="countdown-item">
+                <span id="days" class="countdown-badge">00</span>
+                <span class="countdown-label">Days</span>
+            </div>
+            <span style="color: #a87b32;">•</span>
+            <div class="countdown-item">
+                <span id="hours" class="countdown-badge">00</span>
+                <span class="countdown-label">Hours</span>
+            </div>
+            <span style="color: #a87b32;">•</span>
+            <div class="countdown-item">
+                <span id="minutes" class="countdown-badge">00</span>
+                <span class="countdown-label">Mins</span>
+            </div>
+            <span style="color: #a87b32;">•</span>
+            <div class="countdown-item">
+                <span id="seconds" class="countdown-badge">00</span>
+                <span class="countdown-label">Secs</span>
+            </div>
+        </div>
 
-  <script>
-    /* ==========================================================
-       1. Dynamic Background Images Logic
-       ========================================================== */
-    const bgImages = ['floral-background.png', 'wb1.jpg', 'wb2.jpg'];
-    let currentBgIndex = 0;
-    const bgLayer1 = document.getElementById('bgLayer1');
-    const bgLayer2 = document.getElementById('bgLayer2');
-    let activeBgLayer = bgLayer1;
+        <p>
+            <a href="https://maps.app.goo.gl/m43dvr7o9L63gA4F8" target="_blank" class="map-link">📍 View Venue on Google Maps</a>
+        </p>
+    </div>
 
-    if (bgImages.length > 0) {
-      bgLayer1.style.backgroundImage = `url('${bgImages[0]}')`;
-    }
+    <audio id="weddingMusic" src="wedding-music.mp3" loop playsinline></audio>
+    <div class="diya left"></div>
+    <div class="diya right"></div>
+    <button class="music-btn" id="musicToggle" title="Toggle Music">🎵</button>
 
-    function changeBackground() {
-      if (bgImages.length <= 1) return;
-      currentBgIndex = (currentBgIndex + 1) % bgImages.length;
-      const nextImageUrl = `url('${bgImages[currentBgIndex]}')`;
+    <script>
+        /* ========================================================== 1. Dynamic Background Images Logic ========================================================== */
+        const bgImages = ['floral-background.png', 'wb1.jpg', 'wb2.jpg'];
+        let currentBgIndex = 0;
+        const bgLayer1 = document.getElementById('bgLayer1');
+        const bgLayer2 = document.getElementById('bgLayer2');
+        let activeBgLayer = bgLayer1;
 
-      if (activeBgLayer === bgLayer1) {
-        bgLayer2.style.backgroundImage = nextImageUrl;
-        bgLayer2.style.opacity = '1';
-        bgLayer1.style.opacity = '0';
-        activeBgLayer = bgLayer2;
-      } else {
-        bgLayer1.style.backgroundImage = nextImageUrl;
-        bgLayer1.style.opacity = '1';
-        bgLayer2.style.opacity = '0';
-        activeBgLayer = bgLayer1;
-      }
-    }
-    setInterval(changeBackground, 6000);
-
-    /* ==========================================================
-       2. Overlay Ambient Petal Shower Logic
-       ========================================================== */
-    const overlayPetalContainer = document.getElementById('overlayPetalsContainer');
-    const petalEmojis = ['🌸', '🌹', '🌺', '✨', '🌷','❤️'];
-
-    function spawnOverlayPetal() {
-      if (!overlayPetalContainer) return;
-      const petal = document.createElement('div');
-      petal.className = 'overlay-petal';
-      petal.textContent = petalEmojis[Math.floor(Math.random() * petalEmojis.length)];
-      petal.style.left = Math.random() * 100 + 'vw';
-      
-      const duration = 4 + Math.random() * 4;
-      petal.style.animationDuration = duration + 's';
-      
-      overlayPetalContainer.appendChild(petal);
-      setTimeout(() => petal.remove(), duration * 1000);
-    }
-    const overlayPetalInterval = setInterval(spawnOverlayPetal, 450);
-
-    /* ==========================================================
-       3. Dynamic Foreground Image Slideshow Logic
-       ========================================================== */
-    const slides = document.querySelectorAll('#coupleSlideshow img');
-    let currentSlide = 0;
-    const slideInterval = 3500;
-
-    function nextSlide() {
-      slides[currentSlide].classList.remove('active');
-      currentSlide = (currentSlide + 1) % slides.length;
-      slides[currentSlide].classList.add('active');
-    }
-    if (slides.length > 1) {
-      setInterval(nextSlide, slideInterval);
-    }
-
-    /* ==========================================================
-       4. Guided Spiral Auto-Scratch Canvas
-       ========================================================== */
-    const scratchContainer = document.getElementById("scratchContainer");
-    const canvas = document.getElementById("scratchCanvas");
-    const ctx = canvas.getContext("2d");
-    let isDrawing = false;
-    let isRevealed = false;
-    let animFrame = null;
-
-    function initScratchCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-
-      // Fill Canvas with Gold Metallic Gradient
-      const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-      gradient.addColorStop(0, '#bf953f');
-      gradient.addColorStop(0.25, '#fcf6ba');
-      gradient.addColorStop(0.5, '#b38728');
-      gradient.addColorStop(0.75, '#fbf5b7');
-      gradient.addColorStop(1, '#aa771c');
-
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      // Gold Texture Text Overlay
-      ctx.fillStyle = "rgba(74, 0, 31, 0.2)";
-      ctx.font = "bold 26px Georgia";
-      ctx.textAlign = "center";
-      for (let y = 80; y < canvas.height; y += 120) {
-        for (let x = 120; x < canvas.width; x += 220) {
-          ctx.fillText("✨ Revealing... ✨", x, y);
-        }
-      }
-
-      ctx.globalCompositeOperation = "destination-out";
-      ctx.lineWidth = Math.min(window.innerWidth * 0.18, 100);
-      ctx.lineCap = "round";
-      ctx.lineJoin = "round";
-    }
-
-    function revealInvitation() {
-      if (isRevealed) return;
-      isRevealed = true;
-      if (animFrame) cancelAnimationFrame(animFrame);
-
-      scratchContainer.classList.add("hidden");
-      setTimeout(() => {
-        scratchContainer.style.display = "none";
-      }, 600);
-    }
-
-    function performManualScratch(e) {
-      if (!isDrawing || isRevealed) return;
-
-      const rect = canvas.getBoundingClientRect();
-      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-
-      const x = clientX - rect.left;
-      const y = clientY - rect.top;
-
-      ctx.beginPath();
-      ctx.arc(x, y, ctx.lineWidth / 2, 0, Math.PI * 2);
-      ctx.fill();
-    }
-
-    // Interactive Scratch Events
-    canvas.addEventListener("mousedown", (e) => { isDrawing = true; performManualScratch(e); });
-    canvas.addEventListener("mousemove", performManualScratch);
-    canvas.addEventListener("mouseup", () => { isDrawing = false; });
-
-    canvas.addEventListener("touchstart", (e) => { isDrawing = true; performManualScratch(e); }, { passive: true });
-    canvas.addEventListener("touchmove", performManualScratch, { passive: true });
-    canvas.addEventListener("touchend", () => { isDrawing = false; });
-
-    function startSpiralScratchEffect() {
-      initScratchCanvas();
-      scratchContainer.classList.add("active");
-
-      let angle = 0;
-      let radius = 10;
-      const centerX = canvas.width / 2;
-      const centerY = canvas.height / 2;
-      const maxRadius = Math.max(canvas.width, canvas.height) * 0.7;
-
-      function animateSpiral() {
-        if (isRevealed) return;
-
-        for (let i = 0; i < 4; i++) {
-          const x = centerX + Math.cos(angle) * radius;
-          const y = centerY + Math.sin(angle) * radius;
-
-          ctx.beginPath();
-          ctx.arc(x, y, ctx.lineWidth / 2, 0, Math.PI * 2);
-          ctx.fill();
-
-          angle += 0.25;
-          radius += 4.5;
+        if (bgImages.length > 0) {
+            bgLayer1.style.backgroundImage = `url('${bgImages[0]}')`;
         }
 
-        if (radius >= maxRadius) {
-          revealInvitation();
-        } else {
-          animFrame = requestAnimationFrame(animateSpiral);
+        function changeBackground() {
+            if (bgImages.length <= 1) return;
+            currentBgIndex = (currentBgIndex + 1) % bgImages.length;
+            const nextImageUrl = `url('${bgImages[currentBgIndex]}')`;
+
+            if (activeBgLayer === bgLayer1) {
+                bgLayer2.style.backgroundImage = nextImageUrl;
+                bgLayer2.style.opacity = '1';
+                bgLayer1.style.opacity = '0';
+                activeBgLayer = bgLayer2;
+            } else {
+                bgLayer1.style.backgroundImage = nextImageUrl;
+                bgLayer1.style.opacity = '1';
+                bgLayer2.style.opacity = '0';
+                activeBgLayer = bgLayer1;
+            }
         }
-      }
+        setInterval(changeBackground, 6000);
 
-      animateSpiral();
-    }
+        /* ========================================================== 2. Overlay Ambient Petal Shower Logic ========================================================== */
+        const overlayPetalContainer = document.getElementById('overlayPetalsContainer');
+        const petalEmojis = ['🌸', '🌹', '🌺', '✨', '🌷','❤️'];
 
-    /* ==========================================================
-       5. General Website Interactions & Animations
-       ========================================================== */
-    const audio = document.getElementById("weddingMusic");
-    const musicBtn = document.getElementById("musicToggle");
-    const overlay = document.getElementById("overlay");
-    const openBtn = document.getElementById("openBtn");
-    const mainShowerContainer = document.getElementById("mainShowerContainer");
+        function spawnOverlayPetal() {
+            if (!overlayPetalContainer) return;
+            const petal = document.createElement('div');
+            petal.className = 'overlay-petal';
+            petal.textContent = petalEmojis[Math.floor(Math.random() * petalEmojis.length)];
+            petal.style.left = Math.random() * 100 + 'vw';
+            const duration = 4 + Math.random() * 4;
+            petal.style.animationDuration = duration + 's';
+            overlayPetalContainer.appendChild(petal);
+            setTimeout(() => petal.remove(), duration * 1000);
+        }
+        const overlayPetalInterval = setInterval(spawnOverlayPetal, 450);
 
-    const flowerEmojis = ['🌸', '🌺', '🌼', '🌹', '🌷', '✨','❤️'];
+        /* ========================================================== 3. Dynamic Foreground Image Slideshow Logic ========================================================== */
+        const slides = document.querySelectorAll('#coupleSlideshow img');
+        let currentSlide = 0;
+        const slideInterval = 3500;
 
-    function spawnMainPageFlower(corner) {
-      const flower = document.createElement("div");
-      const duration = 3.5 + Math.random() * 2.5;
-      
-      flower.className = `page-showering-flower ${corner === 'topLeft' ? 'shower-top-left' : 'shower-top-right'}`;
-      flower.textContent = flowerEmojis[Math.floor(Math.random() * flowerEmojis.length)];
-      
-      if (corner === 'topLeft') {
-        flower.style.left = (Math.random() * 20) + "%";
-        flower.style.top = "-20px";
-      } else {
-        flower.style.right = (Math.random() * 20) + "%";
-        flower.style.top = "-20px";
-      }
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+        if (slides.length > 1) {
+            setInterval(nextSlide, slideInterval);
+        }
 
-      flower.style.animationDuration = duration + "s";
-      mainShowerContainer.appendChild(flower);
+        /* ========================================================== 4. Guided Spiral Auto-Scratch Canvas ========================================================== */
+        const scratchContainer = document.getElementById("scratchContainer");
+        const canvas = document.getElementById("scratchCanvas");
+        const ctx = canvas.getContext("2d");
+        let isDrawing = false;
+        let isRevealed = false;
+        let animFrame = null;
 
-      setTimeout(() => flower.remove(), duration * 1000);
-    }
+        function initScratchCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
 
-    setInterval(() => {
-      spawnMainPageFlower('topLeft');
-      spawnMainPageFlower('topRight');
-    }, 350);
+            const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            gradient.addColorStop(0, '#bf953f');
+            gradient.addColorStop(0.25, '#fcf6ba');
+            gradient.addColorStop(0.5, '#b38728');
+            gradient.addColorStop(0.75, '#fbf5b7');
+            gradient.addColorStop(1, '#aa771c');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Audio & Scratch Trigger
-    openBtn.addEventListener("click", () => {
-      clearInterval(overlayPetalInterval);
-      overlay.classList.add("hidden");
-      
-      // Start Spiral Scratch Reveal
-      startSpiralScratchEffect();
+            ctx.fillStyle = "rgba(74, 0, 31, 0.2)";
+            ctx.font = "bold 26px Georgia";
+            ctx.textAlign = "center";
+            for (let y = 80; y < canvas.height; y += 120) {
+                for (let x = 120; x < canvas.width; x += 220) {
+                    ctx.fillText("✨ Revealing... ✨", x, y);
+                }
+            }
 
-      // Play audio with fade-in
-      audio.volume = 0;
-      audio.play().then(() => {
-        let vol = 0;
-        const fadeIn = setInterval(() => {
-          if (vol < 0.8) {
-            vol += 0.05;
-            audio.volume = vol;
-          } else {
-            clearInterval(fadeIn);
-          }
-        }, 150);
-      }).catch(err => console.log("Audio play error:", err));
-    });
+            ctx.globalCompositeOperation = "destination-out";
+            ctx.lineWidth = Math.min(window.innerWidth * 0.18, 100);
+            ctx.lineCap = "round";
+            ctx.lineJoin = "round";
+        }
 
-    musicBtn.addEventListener("click", () => {
-      if (audio.paused) {
-        audio.play();
-        musicBtn.textContent = "🎵";
-      } else {
-        audio.pause();
-        musicBtn.textContent = "0️⃣";
-      }
-    });
+        function revealInvitation() {
+            if (isRevealed) return;
+            isRevealed = true;
+            if (animFrame) cancelAnimationFrame(animFrame);
+            scratchContainer.classList.add("hidden");
+            setTimeout(() => {
+                scratchContainer.style.display = "none";
+            }, 600);
+        }
 
-    // Countdown Logic
-    const weddingDate = new Date("November 21, 2026 00:00:00").getTime();
+        function performManualScratch(e) {
+            if (!isDrawing || isRevealed) return;
+            const rect = canvas.getBoundingClientRect();
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            const x = clientX - rect.left;
+            const y = clientY - rect.top;
 
-    function updateCountdown() {
-      const now = new Date().getTime();
-      const distance = weddingDate - now;
+            ctx.beginPath();
+            ctx.arc(x, y, ctx.lineWidth / 2, 0, Math.PI * 2);
+            ctx.fill();
+        }
 
-      if (distance < 0) {
-        document.getElementById("days").innerText = "00";
-        document.getElementById("hours").innerText = "00";
-        document.getElementById("minutes").innerText = "00";
-        document.getElementById("seconds").innerText = "00";
-        return;
-      }
+        canvas.addEventListener("mousedown", (e) => { isDrawing = true; performManualScratch(e); });
+        canvas.addEventListener("mousemove", performManualScratch);
+        canvas.addEventListener("mouseup", () => { isDrawing = false; });
+        canvas.addEventListener("touchstart", (e) => { isDrawing = true; performManualScratch(e); }, { passive: true });
+        canvas.addEventListener("touchmove", performManualScratch, { passive: true });
+        canvas.addEventListener("touchend", () => { isDrawing = false; });
 
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        function startSpiralScratchEffect() {
+            initScratchCanvas();
+            scratchContainer.classList.add("active");
+            let angle = 0;
+            let radius = 10;
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const maxRadius = Math.max(canvas.width, canvas.height) * 0.7;
 
-      document.getElementById("days").innerText = String(days).padStart(2, '0');
-      document.getElementById("hours").innerText = String(hours).padStart(2, '0');
-      document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
-      document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
-    }
+            function animateSpiral() {
+                if (isRevealed) return;
+                for (let i = 0; i < 4; i++) {
+                    const x = centerX + Math.cos(angle) * radius;
+                    const y = centerY + Math.sin(angle) * radius;
+                    ctx.beginPath();
+                    ctx.arc(x, y, ctx.lineWidth / 2, 0, Math.PI * 2);
+                    ctx.fill();
+                    angle += 0.25;
+                    radius += 4.5;
+                }
+                if (radius >= maxRadius) {
+                    revealInvitation();
+                } else {
+                    animFrame = requestAnimationFrame(animateSpiral);
+                }
+            }
+            animateSpiral();
+        }
 
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
+        /* ========================================================== 5. General Website Interactions & Animations ========================================================== */
+        const audio = document.getElementById("weddingMusic");
+        const musicBtn = document.getElementById("musicToggle");
+        const overlay = document.getElementById("overlay");
+        const openBtn = document.getElementById("openBtn");
+        const mainShowerContainer = document.getElementById("mainShowerContainer");
+        const flowerEmojis = ['🌸', '🌺', '🌼', '🌹', '🌷', '✨','❤️'];
 
-    // Floating Petals
-    function createPetal() {
-      const petal = document.createElement("div");
-      petal.className = "petal";
-      petal.style.left = Math.random() * window.innerWidth + "px";
-      petal.style.animationDuration = (5 + Math.random() * 5) + "s";
-      document.body.appendChild(petal);
-      setTimeout(() => petal.remove(), 10000);
-    }
-    setInterval(createPetal, 1000);
+        function spawnMainPageFlower(corner) {
+            const flower = document.createElement("div");
+            const duration = 3.5 + Math.random() * 2.5;
+            flower.className = `page-showering-flower ${corner === 'topLeft' ? 'shower-top-left' : 'shower-top-right'}`;
+            flower.textContent = flowerEmojis[Math.floor(Math.random() * flowerEmojis.length)];
+            
+            if (corner === 'topLeft') {
+                flower.style.left = (Math.random() * 20) + "%";
+                flower.style.top = "-20px";
+            } else {
+                flower.style.right = (Math.random() * 20) + "%";
+                flower.style.top = "-20px";
+            }
+            flower.style.animationDuration = duration + "s";
+            mainShowerContainer.appendChild(flower);
+            setTimeout(() => flower.remove(), duration * 1000);
+        }
 
-    // Floating Bells
-    function createBell() {
-      const bell = document.createElement("div");
-      bell.className = "bell";
-      bell.style.left = Math.random() * window.innerWidth + "px";
-      bell.style.animationDuration = (6 + Math.random() * 4) + "s";
-      document.body.appendChild(bell);
-      setTimeout(() => bell.remove(), 12000);
-    }
-    setInterval(createBell, 6000);
-  </script>
+        setInterval(() => {
+            spawnMainPageFlower('topLeft');
+            spawnMainPageFlower('topRight');
+        }, 350);
 
+        openBtn.addEventListener("click", () => {
+            clearInterval(overlayPetalInterval);
+            overlay.classList.add("hidden");
+            startSpiralScratchEffect();
+
+            audio.volume = 0;
+            audio.play().then(() => {
+                let vol = 0;
+                const fadeIn = setInterval(() => {
+                    if (vol < 0.8) {
+                        vol += 0.05;
+                        audio.volume = vol;
+                    } else {
+                        clearInterval(fadeIn);
+                    }
+                }, 150);
+            }).catch(err => console.log("Audio play error:", err));
+        });
+
+        musicBtn.addEventListener("click", () => {
+            if (audio.paused) {
+                audio.play();
+                musicBtn.textContent = "🎵";
+            } else {
+                audio.pause();
+                musicBtn.textContent = "0️⃣";
+            }
+        });
+
+        const weddingDate = new Date("November 21, 2026 00:00:00").getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = weddingDate - now;
+
+            if (distance < 0) {
+                document.getElementById("days").innerText = "00";
+                document.getElementById("hours").innerText = "00";
+                document.getElementById("minutes").innerText = "00";
+                document.getElementById("seconds").innerText = "00";
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = String(days).padStart(2, '0');
+            document.getElementById("hours").innerText = String(hours).padStart(2, '0');
+            document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
+            document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+        function createPetal() {
+            const petal = document.createElement("div");
+            petal.className = "petal";
+            petal.style.left = Math.random() * window.innerWidth + "px";
+            petal.style.animationDuration = (5 + Math.random() * 5) + "s";
+            document.body.appendChild(petal);
+            setTimeout(() => petal.remove(), 10000);
+        }
+        setInterval(createPetal, 1000);
+
+        function createBell() {
+            const bell = document.createElement("div");
+            bell.className = "bell";
+            bell.style.left = Math.random() * window.innerWidth + "px";
+            bell.style.animationDuration = (6 + Math.random() * 4) + "s";
+            document.body.appendChild(bell);
+            setTimeout(() => bell.remove(), 12000);
+        }
+        setInterval(createBell, 6000);
+    </script>
 </body>
 </html>
