@@ -100,12 +100,12 @@
             box-shadow: 0 0 45px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(212, 175, 55, 0.2);
             max-width: 580px;
             width: 92%;
-            max-height: 90vh; /* Prevents card from exceeding viewport height */
+            max-height: 90vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             z-index: 2;
-            overflow-y: auto; /* Allows smooth scrolling if screen is too short */
+            overflow-y: auto;
         }
 
         /* Decorative Corner Floral Patterns */
@@ -175,7 +175,7 @@
         /* Luxury Button Styling */
         .open-btn {
             margin-top: 10px;
-            margin-bottom: 10px; /* Added safe margin at bottom */
+            margin-bottom: 10px;
             padding: 14px 32px;
             font-size: clamp(0.9em, 3.2vw, 1.1em);
             font-family: 'Cinzel', 'Georgia', serif;
@@ -502,7 +502,7 @@
             to { filter: drop-shadow(0 0 12px orange); }
         }
 
-        /* Enhanced Vinyl Record Music Button Styling */
+        /* Vinyl Record Music Button Styling */
         .music-btn {
             position: fixed;
             bottom: 15px;
@@ -531,6 +531,29 @@
         .vinyl-inner {
             font-size: clamp(1.2em, 3.5vw, 1.6em);
         }
+
+        /* Language Toggle Button Styling */
+        .lang-btn {
+            position: fixed;
+            bottom: 15px;
+            left: 15px;
+            background: linear-gradient(135deg, #8b2626, #d4af37);
+            color: #ffffff;
+            border: 2px solid #ffd700;
+            border-radius: 30px;
+            padding: 8px 14px;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: clamp(0.75em, 2.8vw, 0.9em);
+            cursor: pointer;
+            z-index: 10;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            transition: transform 0.3s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .lang-btn:hover {
+            transform: scale(1.08);
+        }
     </style>
 </head>
 <body>
@@ -553,27 +576,27 @@
         <div class="overlay-card">
             <!-- Lord Ganesha Image in Overlay -->
             <img src="ganesha.png" alt="Lord Ganesha" class="overlay-ganesha">
-            <h3>ॐ श्री गणेशाय नमः</h3>
+            <h3 data-en="ॐ श्री गणेशाय नमः" data-hi="ॐ श्री गणेशाय नमः">ॐ श्री गणेशाय नमः</h3>
             <div class="ornament">✦ ━━━━ ✦</div>
-            <h2>You Are Cordially Invited</h2>
-            <p class="test">Aishwarya & Shivam</p>
+            <h2 data-en="You Are Cordially Invited" data-hi="आपकी सपरिवार उपस्थिति प्रार्थनीय है">You Are Cordially Invited</h2>
+            <p class="test" data-en="Aishwarya & Shivam" data-hi="ऐश्वर्या और शिवम">Aishwarya & Shivam</p>
             <div class="ornament">✦ ━━━━ ✦</div>
-            <button class="open-btn" id="openBtn">✉️ Open Invitation</button>
+            <button class="open-btn" id="openBtn" data-en="✉️ Open Invitation" data-hi="✉️ निमंत्रण खोलें">✉️ Open Invitation</button>
         </div>
     </div>
 
     <!-- Interactive + Auto-Spiral Scratch Layer -->
     <div class="scratch-container" id="scratchContainer">
         <canvas id="scratchCanvas"></canvas>
-        <div class="scratch-hint" id="scratchHint">✨ Revealing Invitation... ✨</div>
+        <div class="scratch-hint" id="scratchHint" data-en="✨ Revealing Invitation... ✨" data-hi="✨ निमंत्रण खुल रहा है... ✨">✨ Revealing Invitation... ✨</div>
     </div>
 
     <!-- Invitation Card -->
     <div class="card">
         <img src="ganesha.png" alt="Lord Ganesha" class="ganesha">
-        <h1> ॐ श्री गणेशाय नमः </h1>
-        <h1>💍 Wedding Invitation 💍</h1>
-        <h2>Aishwarya & Shivam</h2>
+        <h1 data-en="ॐ श्री गणेशाय नमः" data-hi="ॐ श्री गणेशाय नमः"> ॐ श्री गणेशाय नमः </h1>
+        <h1 data-en="💍 Wedding Invitation 💍" data-hi="💍 विवाह आमंत्रण 💍">💍 Wedding Invitation 💍</h1>
+        <h2 data-en="Aishwarya & Shivam" data-hi="ऐश्वर्या और शिवम">Aishwarya & Shivam</h2>
 
         <!-- Dynamic Foreground Couple Section with Multiple Images -->
         <div class="couple">
@@ -595,7 +618,9 @@
             <div class="heart" style="right: 95%;">💞</div>
         </div>
 
-        <p class="details">
+        <p class="details" 
+           data-en="✨ With hearts full of joy, we invite you to join us ✨<br>💍 On <strong>21st November 2026, 8 PM Onwards</strong><br>🏰 At <strong>LA MANSION, New Delhi</strong><br>🌺 To celebrate the sacred union of Aishwarya & Shivam 🌺"
+           data-hi="✨ अत्यंत हर्ष के साथ हम आपको सादर आमंत्रित करते हैं ✨<br>💍 दिनांक: <strong>21 नवंबर 2026, रात्रि 8 बजे से</strong><br>🏰 स्थान: <strong>ला मैंशन, नई दिल्ली</strong><br>🌺 ऐश्वर्या और शिवम के पवित्र विवाह उत्सव में पधारकर अनुग्रहित करें 🌺">
             ✨ With hearts full of joy, we invite you to join us ✨<br>
             💍 On <strong>21st November 2026, 8 PM Onwards</strong><br>
             🏰 At <strong>LA MANSION, New Delhi</strong><br>
@@ -606,33 +631,36 @@
         <div class="countdown-container">
             <div class="countdown-item">
                 <span id="days" class="countdown-badge">00</span>
-                <span class="countdown-label">Days</span>
+                <span class="countdown-label" data-en="Days" data-hi="दिन">Days</span>
             </div>
             <span style="color: #a87b32;">•</span>
             <div class="countdown-item">
                 <span id="hours" class="countdown-badge">00</span>
-                <span class="countdown-label">Hours</span>
+                <span class="countdown-label" data-en="Hours" data-hi="घंटे">Hours</span>
             </div>
             <span style="color: #a87b32;">•</span>
             <div class="countdown-item">
                 <span id="minutes" class="countdown-badge">00</span>
-                <span class="countdown-label">Mins</span>
+                <span class="countdown-label" data-en="Mins" data-hi="मिनट">Mins</span>
             </div>
             <span style="color: #a87b32;">•</span>
             <div class="countdown-item">
                 <span id="seconds" class="countdown-badge">00</span>
-                <span class="countdown-label">Secs</span>
+                <span class="countdown-label" data-en="Secs" data-hi="सेकंड">Secs</span>
             </div>
         </div>
 
         <p>
-            <a href="https://maps.app.goo.gl/m43dvr7o9L63gA4F8" target="_blank" class="map-link">📍 View Venue on Google Maps</a>
+            <a href="https://maps.app.goo.gl/m43dvr7o9L63gA4F8" target="_blank" class="map-link" data-en="📍 View Venue on Google Maps" data-hi="📍 गूगल मैप्स पर स्थान देखें">📍 View Venue on Google Maps</a>
         </p>
     </div>
 
     <audio id="weddingMusic" src="wedding-music.mp3" loop playsinline></audio>
     <div class="diya left"></div>
     <div class="diya right"></div>
+    
+    <!-- Controls -->
+    <button class="lang-btn" id="langToggle">हिंदी / EN</button>
     <button class="music-btn" id="musicToggle" title="Toggle Music">
         <span class="vinyl-inner" id="musicIcon">💿</span>
     </button>
@@ -724,13 +752,13 @@
                 this.vx = Math.cos(angle) * speed;
                 this.vy = Math.sin(angle) * speed;
                 this.alpha = 1;
-                this.color = `hsl(${Math.random() * 60 + 35}, 100%, 65%)`; // Gold/Yellow/Orange hues
+                this.color = `hsl(${Math.random() * 60 + 35}, 100%, 65%)`;
                 this.decay = Math.random() * 0.015 + 0.01;
             }
             update() {
                 this.x += this.vx;
                 this.y += this.vy;
-                this.vy += 0.08; // gravity
+                this.vy += 0.08;
                 this.alpha -= this.decay;
             }
             draw() {
@@ -800,8 +828,6 @@
             isRevealed = true;
             if (animFrame) cancelAnimationFrame(animFrame);
             scratchContainer.classList.add("hidden");
-            
-            // Trigger celebration fireworks effect upon reveal!
             triggerFireworksBurst();
 
             setTimeout(() => {
@@ -858,7 +884,18 @@
             animateSpiral();
         }
 
-        /* ========================================================== 6. General Website Interactions & Animations ========================================================== */
+        /* ========================================================== 6. Language Translator Logic ========================================================== */
+        let currentLang = 'en';
+        const langToggleBtn = document.getElementById('langToggle');
+
+        langToggleBtn.addEventListener('click', () => {
+            currentLang = currentLang === 'en' ? 'hi' : 'en';
+            document.querySelectorAll('[data-en]').forEach(el => {
+                el.innerHTML = el.getAttribute(`data-${currentLang}`);
+            });
+        });
+
+        /* ========================================================== 7. General Website Interactions & Animations ========================================================== */
         const audio = document.getElementById("weddingMusic");
         const musicBtn = document.getElementById("musicToggle");
         const musicIcon = document.getElementById("musicIcon");
