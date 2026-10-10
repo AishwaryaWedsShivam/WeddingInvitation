@@ -510,7 +510,7 @@
             to { filter: drop-shadow(0 0 12px orange); }
         }
 
-        /* Vinyl Record Music Button Styling */
+        /* Vinyl Record Music Button Styling - High Z-Index */
         .music-btn {
             position: fixed;
             bottom: 15px;
@@ -524,7 +524,7 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            z-index: 10;
+            z-index: 10000;
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
             transition: transform 0.3s ease;
             -webkit-tap-highlight-color: transparent;
@@ -540,7 +540,7 @@
             font-size: clamp(1.2em, 3.5vw, 1.6em);
         }
 
-        /* Language Toggle Button Styling */
+        /* Language Toggle Button Styling - High Z-Index */
         .lang-btn {
             position: fixed;
             bottom: 15px;
@@ -554,7 +554,7 @@
             font-weight: 700;
             font-size: clamp(0.75em, 2.8vw, 0.9em);
             cursor: pointer;
-            z-index: 10;
+            z-index: 10000;
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
             transition: transform 0.3s ease;
             -webkit-tap-highlight-color: transparent;
@@ -667,7 +667,7 @@
     <div class="diya left"></div>
     <div class="diya right"></div>
     
-    <!-- Controls -->
+    <!-- Controls with Highest Z-Index -->
     <button class="lang-btn" id="langToggle">हिंदी / EN</button>
     <button class="music-btn" id="musicToggle" title="Toggle Music">
         <span class="vinyl-inner" id="musicIcon">💿</span>
