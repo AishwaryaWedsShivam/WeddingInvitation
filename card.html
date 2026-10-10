@@ -52,7 +52,7 @@
             z-index: 9999;
             color: #fff;
             text-align: center;
-            padding: 20px;
+            padding: 15px;
             transition: opacity 0.8s ease, visibility 0.8s ease;
             opacity: 1;
             overflow: hidden;
@@ -88,23 +88,24 @@
             100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
         }
 
-        /* Glassmorphism Card Frame with Floral Decor for Overlay */
+        /* Glassmorphism Card Frame with Fixed Overflow/Scrolling for Mobile */
         .overlay-card {
             position: relative;
-            background: rgba(43, 17, 16, 0.75);
+            background: rgba(43, 17, 16, 0.85);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border: 2px solid rgba(212, 175, 55, 0.6);
-            padding: clamp(35px, 6vw, 55px) clamp(20px, 5vw, 45px);
+            padding: clamp(25px, 5vw, 45px) clamp(15px, 4vw, 35px);
             border-radius: 28px;
             box-shadow: 0 0 45px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(212, 175, 55, 0.2);
             max-width: 580px;
-            width: 90%;
+            width: 92%;
+            max-height: 90vh; /* Prevents card from exceeding viewport height */
             display: flex;
             flex-direction: column;
             align-items: center;
             z-index: 2;
-            overflow: hidden;
+            overflow-y: auto; /* Allows smooth scrolling if screen is too short */
         }
 
         /* Decorative Corner Floral Patterns */
@@ -120,9 +121,9 @@
 
         /* Lord Ganesha Icon in Overlay */
         .overlay-ganesha {
-            width: clamp(75px, 22vw, 120px);
+            width: clamp(65px, 18vw, 100px);
             height: auto;
-            margin: 5px 0 12px 0;
+            margin: 2px 0 8px 0;
             filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.85));
             animation: ganeshaGlow 3s ease-in-out infinite alternate;
         }
@@ -133,19 +134,19 @@
 
         .ornament {
             color: #D4AF37;
-            font-size: clamp(0.9em, 3vw, 1.2em);
+            font-size: clamp(0.8em, 2.5vw, 1.1em);
             letter-spacing: 6px;
             opacity: 0.9;
-            margin: 4px 0;
+            margin: 2px 0;
         }
 
         /* Royal Gold Header Typography */
         .overlay h2 {
             font-family: 'Cinzel', 'Georgia', serif;
-            font-size: clamp(1.6em, 5.5vw, 3.1em);
+            font-size: clamp(1.4em, 4.8vw, 2.6em);
             font-weight: 700;
             letter-spacing: 2px;
-            margin: 12px 0 6px 0;
+            margin: 8px 0 4px 0;
             text-transform: uppercase;
             background: linear-gradient(135deg, #FFE066 0%, #FFFFFF 25%, #F5AF19 50%, #E65C00 75%, #FFD700 100%);
             background-size: 200% auto;
@@ -162,9 +163,9 @@
         /* Elegant Calligraphy Subtitle */
         .overlay p.test {
             font-family: 'Great Vibes', 'Georgia', cursive;
-            font-size: clamp(1.8em, 5.5vw, 2.8em);
+            font-size: clamp(1.6em, 5vw, 2.5em);
             color: #FFF8E7;
-            margin: 4px 0 18px 0;
+            margin: 2px 0 12px 0;
             letter-spacing: 1px;
             text-shadow: 0 0 12px rgba(255, 215, 0, 0.6), 0 2px 4px rgba(0, 0, 0, 0.9);
             background: none;
@@ -174,8 +175,9 @@
         /* Luxury Button Styling */
         .open-btn {
             margin-top: 10px;
-            padding: 16px 38px;
-            font-size: clamp(0.95em, 3.5vw, 1.15em);
+            margin-bottom: 10px; /* Added safe margin at bottom */
+            padding: 14px 32px;
+            font-size: clamp(0.9em, 3.2vw, 1.1em);
             font-family: 'Cinzel', 'Georgia', serif;
             font-weight: 700;
             letter-spacing: 2px;
